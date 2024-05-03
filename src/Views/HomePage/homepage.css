@@ -1,0 +1,19 @@
+.body {
+  width: 60%;
+}
+
+.title {
+  font-size: 2em;
+  font-family: "Figtree", sans-serif;
+  margin: 15px;
+  color: white;
+}
+.terminal-welcome {
+  font-family: monospace;
+  margin-left: 25px;
+  font-size: larger;
+}
+#asc-art {
+  margin-left: 25px;
+  color: white;
+}
