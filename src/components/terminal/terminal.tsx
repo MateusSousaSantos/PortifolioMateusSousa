@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "./terminal.css";
 import { componentsMap } from "../terminal-list/terminal-list";
-import ReactDOM from "react-dom"; // Import ReactDOM
 import TerminalText from "../terminalText/terminalText";
+import { createRoot } from "react-dom/client";
 
 const Terminal = () => {
   const [command, setCommandInput] = useState("");
@@ -16,17 +16,26 @@ const Terminal = () => {
         inputCommand.current?.focus();
         window.scrollTo(0, document.body.scrollHeight);
         terminalBody!.innerHTML = "";
-      }
-      else if (terminalBody) {
+      } else if (terminalBody) {
         const terminalTextNode = document.createElement("div");
         const terminalCommandNode = document.createElement("div");
-        const ComponentToRender = componentsMap[command];
-
         terminalBody.appendChild(terminalTextNode);
-        terminalBody.appendChild(terminalCommandNode);
+        const root = createRoot(terminalTextNode);
 
-        ReactDOM.render(<TerminalText command={command} />, terminalTextNode);
-        ReactDOM.render(<ComponentToRender />, terminalCommandNode);
+        const ComponentToRender = componentsMap[command];
+        if (componentsMap[command] == undefined) {
+          return root.render(
+            <TerminalText
+              command={`Command "${command}" not found , try help to get all the commands`}
+            />
+          );
+        }
+
+        terminalBody.appendChild(terminalCommandNode);
+        const commandRoot = createRoot(terminalCommandNode);
+
+        root.render(<TerminalText command={command} />);
+        commandRoot.render(<ComponentToRender />);
 
         setCommandInput("");
         inputCommand.current?.focus();

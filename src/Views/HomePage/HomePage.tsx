@@ -1,22 +1,17 @@
 import "./homepage.css";
 import Terminal from "../../components/terminal/terminal";
 import TerminalText from "../../components/terminalText/terminalText";
+import { asc_art } from "./asc-art";
 
 const HomePage: React.FC = () => {
   const Bar = () => {
     return <p className="terminal-welcome">-----</p>;
   };
-  const radcomp = `
-██████╗  █████╗ ██████╗ ██╗ █████╗ ███╗   ██╗████████╗     ██████╗ ██████╗ ███╗   ███╗██████╗     ███████╗██╗   ██╗███████╗████████╗███████╗███╗   ███╗
-██╔══██╗██╔══██╗██╔══██╗██║██╔══██╗████╗  ██║╚══██╔══╝    ██╔════╝██╔═══██╗████╗ ████║██╔══██╗    ██╔════╝╚██╗ ██╔╝██╔════╝╚══██╔══╝██╔════╝████╗ ████║
-██████╔╝███████║██║  ██║██║███████║██╔██╗ ██║   ██║       ██║     ██║   ██║██╔████╔██║██████╔╝    ███████╗ ╚████╔╝ ███████╗   ██║   █████╗  ██╔████╔██║
-██╔══██╗██╔══██║██║  ██║██║██╔══██║██║╚██╗██║   ██║       ██║     ██║   ██║██║╚██╔╝██║██╔═══╝     ╚════██║  ╚██╔╝  ╚════██║   ██║   ██╔══╝  ██║╚██╔╝██║
-██║  ██║██║  ██║██████╔╝██║██║  ██║██║ ╚████║   ██║       ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║         ███████║   ██║   ███████║   ██║   ███████╗██║ ╚═╝ ██║
-╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝        ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝         ╚══════╝   ╚═╝   ╚══════╝   ╚═╝   ╚══════╝╚═╝     ╚═╝`;
+
   return (
     <div className="body">
       <TerminalText command="welcome" />
-      <pre id="asc-art">{radcomp}</pre>
+      <pre id="asc-art">{asc_art}</pre>
       <Bar />
       <p className="terminal-welcome">
         Welcome to the Radiant Comp System! Here you can find the best comps

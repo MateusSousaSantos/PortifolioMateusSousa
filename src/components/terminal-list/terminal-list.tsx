@@ -1,10 +1,9 @@
 import React from "react";
+import "./terminal-list.css";
 
-export const Help: React.FC = () => {
+const Help: React.FC = () => {
   return (
-    <div
-      style={{ margin: "25px", fontFamily: "monospace", fontSize: "larger" }}
-    >
+    <div className="command-component">
       <pre>
         <span style={{ color: "rgb(0, 255, 156)" }}>hello</span>
         {`   ---> gives you a hello`}
@@ -21,11 +20,9 @@ export const Help: React.FC = () => {
   );
 };
 
-export const Hello: React.FC = () => {
+const Hello: React.FC = () => {
   return (
-    <div
-      style={{ margin: "25px", fontFamily: "monospace", fontSize: "larger" }}
-    >
+    <div className="command-component">
       <pre>-----</pre>
       Welcome to RadiantComp System! to start just type logIn into the terminal
       to acces our system
@@ -34,24 +31,21 @@ export const Hello: React.FC = () => {
   );
 };
 
-export const logIn: React.FC = () => {
+const LogIn: React.FC = () => {
   return <div>Component 3</div>;
 };
 
-export const valAgents: React.FC = () => {
-
- return (
-    <div>
-        <div>
-            Dantas é legal
-        </div>
+const ValAgents: React.FC = () => {
+  return (
+    <div className="command-component">
+      <div>Dantas é legal</div>
     </div>
- )
-}
+  );
+};
 
 export const componentsMap: { [key: string]: React.FC } = {
   help: Help,
   hello: Hello,
-  logIn: logIn,
-  valAgents: valAgents
+  logIn: LogIn,
+  valAgents: ValAgents,
 };
