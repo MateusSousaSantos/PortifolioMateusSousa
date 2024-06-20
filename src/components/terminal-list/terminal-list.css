@@ -1,5 +1,117 @@
 .command-component {
-    margin: 25px;
-    font-family: monospace;
-    font-size: larger;
+  margin: 25px;
+  font-family: monospace;
+  font-size: larger;
+}
+.somniumDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 20px;
+  width: 50%;
+  padding: 10px;
+  border: 1px aliceblue solid;
+  margin: 15px 15px 15px 15px;
+}
+.siteDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 20px;
+  width: 70%;
+  padding: 10px;
+  border: 1px aliceblue solid;
+  margin: 15px 15px 15px 15px;
+}
+.somniumDiv > .text {
+  display: flex;
+  justify-content: top;
+  margin: 5px;
+  width: 50%;
+}
+.somniumDiv > .images {
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+.somniumDiv > .images_site {
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+.somniumDiv > .images > .cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5px;
+  flex: 1;
+  height: 100%;
+}
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card > img {
+  width: 50%;
+}
+.card > p {
+  font-size: 12px;
+  margin: 5px;
+}
+.cavernaDoMestre {
+  width: 100%;
+}
+.button {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.skills {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between ;
+    margin: 5px;
+    width: 30%;
+    padding: 0px 25px 5px 0px;
+
+}
+.skills ul {
+    list-style-type: none;
+}
+.skills ul li {
+    margin: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.skills ul li * {
+    margin: 5px 0 0 10px;
+}
+
+
+.byte {
+  position: relative;
+  background-color: white;
+  color: black;
+  width: 100%;
+  margin: 0  7px 0 0;
+}
+
+.pun {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  visibility: hidden;
+  background-color: white;
+  color: black;
+  width: 105px;
+}
+
+.byte:hover .pun {
+  visibility: visible;
 }

@@ -11,9 +11,9 @@ const TerminalText: React.FC<TerminalTextProps> = ({ command }) => {
         fontSize: "larger",
       }}
     >
-      <span style={{ color: "rgb(96, 253, 255)" }}>player@</span>
+      <span style={{ color: "rgb(96, 253, 255)" }}>user@</span>
       <span style={{ color: "rgb(0, 255, 156)" }}>
-        radiantcompsystem-terminal:
+        mateussousasantos-terminal:
       </span>
       <span>~$ </span>
       <span>{command}</span>

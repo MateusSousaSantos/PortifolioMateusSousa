@@ -1,26 +1,27 @@
 import "./homepage.css";
 import Terminal from "../../components/terminal/terminal";
 import TerminalText from "../../components/terminalText/terminalText";
-import { asc_art } from "./asc-art";
+import { mateus_art} from "./asc-art";
 
+export const Bar = () => {
+  return <p className="terminal-welcome">-----</p>;
+};
 const HomePage: React.FC = () => {
-  const Bar = () => {
-    return <p className="terminal-welcome">-----</p>;
-  };
 
   return (
     <div className="body">
       <TerminalText command="welcome" />
-      <pre id="asc-art">{asc_art}</pre>
+      <pre id="asc-art">{mateus_art}</pre>
       <Bar />
       <p className="terminal-welcome">
-        Welcome to the Radiant Comp System! Here you can find the best comps
-        for valorant premier
+        Welcome to my portifolio! Here you can find lost of information about me,
+        and also some projects that I've been working on, like this one!
+        Just like a terminal you can use the commands to navigate through the site!
       </p>
       <Bar />
       <p className="terminal-welcome">
         To get started, type{" "}
-        <span style={{ color: "rgb(0, 255, 156)" }}>"help" </span>to see the
+        <span style={{ color: "rgb(0, 255, 156)" }}>help</span> to see the
         available commands
       </p>
       <Terminal />
