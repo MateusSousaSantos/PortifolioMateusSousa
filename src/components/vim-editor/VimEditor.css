@@ -1,0 +1,218 @@
+/* VimEditor.css */
+.vim-editor {
+  width: 100%;
+  height: 70vh;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+  outline: none;
+  position: relative;
+}
+
+/* Full page mode styles */
+.vim-editor.full-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 100vw;
+  border: none;
+  z-index: 1000;
+}
+
+.vim-editor-header {
+  background-color: #2d2d2d;
+  padding: 5px 10px;
+  border-bottom: 1px solid #333;
+  font-size: 12px;
+  color: #cccccc;
+}
+
+.vim-editor-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.vim-line-numbers {
+  background-color: #252525;
+  color: #666666;
+  padding: 10px 5px;
+  text-align: right;
+  min-width: 40px;
+  border-right: 1px solid #333;
+  user-select: none;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.vim-line-number {
+  height: 19.6px; /* Match text line height */
+}
+
+.vim-text-area {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+}
+
+.vim-text-display {
+  padding: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: pre;
+  min-height: 100%;
+}
+
+.vim-line {
+  min-height: 19.6px;
+  position: relative;
+}
+
+.vim-char {
+  position: relative;
+  white-space: pre;
+}
+
+.vim-cursor {
+  background-color: #ffffff;
+  color: #000000;
+  animation: vim-cursor-blink 1s infinite;
+  position: relative;
+}
+
+.vim-cursor-normal {
+  background-color: #00ff00;
+  color: #000000;
+  animation: none;
+}
+
+.vim-cursor-insert {
+  background-color: #ffffff;
+  color: #000000;
+  animation: vim-cursor-blink 1s infinite;
+}
+
+.vim-cursor-visual {
+  background-color: #ffff00;
+  color: #000000;
+  animation: none;
+}
+
+.vim-cursor-eol {
+  display: inline-block;
+  width: 8px;
+  height: 19.6px;
+  min-width: 8px;
+}
+
+@keyframes vim-cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.vim-hidden-input {
+  position: absolute !important;
+  left: -9999px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 1px !important;
+  height: 1px !important;
+}
+
+.vim-status-bar {
+  background-color: #005f87;
+  color: #ffffff;
+  padding: 2px 10px;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 20px;
+}
+
+.vim-status-left {
+  font-weight: bold;
+}
+
+.vim-status-right {
+  color: #cccccc;
+}
+
+/* Mode-specific styling */
+.vim-editor.normal-mode .vim-status-bar {
+  background-color: #005f87;
+}
+
+.vim-editor.insert-mode .vim-status-bar {
+  background-color: #8b0000;
+}
+
+.vim-editor.visual-mode .vim-status-bar {
+  background-color: #8b4513;
+}
+
+.vim-editor.normal-mode .vim-cursor-normal {
+  background-color: #00ff00;
+  animation: none;
+}
+
+.vim-editor.insert-mode .vim-cursor-insert {
+  background-color: #ffffff;
+  animation: vim-cursor-blink 1s infinite;
+}
+
+.vim-editor.visual-mode .vim-cursor-visual {
+  background-color: #ffff00;
+  animation: none;
+}
+
+/* Scrollbar styling */
+.vim-text-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.vim-text-area::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+.vim-text-area::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.vim-text-area::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .vim-editor {
+    height: 60vh;
+    font-size: 12px;
+  }
+  
+  .vim-line-numbers {
+    min-width: 30px;
+    font-size: 11px;
+  }
+  
+  .vim-text-display {
+    font-size: 12px;
+  }
+  
+  .vim-line {
+    min-height: 16.8px;
+  }
+  
+  .vim-cursor-eol {
+    height: 16.8px;
+  }
+}
