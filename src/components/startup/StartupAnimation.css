@@ -1,0 +1,40 @@
+.startup-animation {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.press-key-text {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 1.2rem;
+  color: #00FF9C;
+  text-align: center;
+  animation: pulse 2s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(0, 255, 156, 0.5);
+  letter-spacing: 0.1em;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+/* Optional: Add a subtle glow effect */
+.press-key-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(0, 255, 156, 0.1) 0%, transparent 70%);
+  z-index: -1;
+}

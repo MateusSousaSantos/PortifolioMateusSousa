@@ -1,0 +1,133 @@
+.markdown-editor {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.markdown-preview {
+  line-height: 1.6;
+}
+
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6 {
+  color: rgb(0, 255, 156);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.markdown-preview h1 {
+  border-bottom: 2px solid rgb(0, 255, 156);
+  padding-bottom: 0.3em;
+}
+
+.markdown-preview h2 {
+  border-bottom: 1px solid rgb(96, 253, 255);
+  padding-bottom: 0.3em;
+}
+
+.markdown-preview p {
+  color: rgb(200, 200, 200);
+  margin-bottom: 1em;
+}
+
+.markdown-preview code {
+  background-color: rgba(96, 253, 255, 0.1);
+  color: rgb(96, 253, 255);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+}
+
+.markdown-preview pre {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgb(96, 253, 255);
+  border-radius: 5px;
+  padding: 15px;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.markdown-preview pre code {
+  background: none;
+  color: rgb(96, 253, 255);
+  padding: 0;
+}
+
+.markdown-preview blockquote {
+  border-left: 4px solid rgb(255, 165, 0);
+  margin-left: 0;
+  padding-left: 20px;
+  color: rgb(255, 165, 0);
+  font-style: italic;
+}
+
+.markdown-preview ul,
+.markdown-preview ol {
+  color: rgb(200, 200, 200);
+  padding-left: 20px;
+}
+
+.markdown-preview li {
+  margin-bottom: 0.5em;
+}
+
+.markdown-preview a {
+  color: rgb(96, 253, 255);
+  text-decoration: none;
+}
+
+.markdown-preview a:hover {
+  text-decoration: underline;
+}
+
+.markdown-preview table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+
+.markdown-preview th,
+.markdown-preview td {
+  border: 1px solid rgb(96, 253, 255);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.markdown-preview th {
+  background-color: rgba(96, 253, 255, 0.1);
+  color: rgb(96, 253, 255);
+  font-weight: bold;
+}
+
+.markdown-preview td {
+  color: rgb(200, 200, 200);
+}
+
+.vim-cursor {
+  background-color: rgba(255, 165, 0, 0.5);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .markdown-editor {
+    padding: 10px;
+  }
+  
+  .mode-buttons {
+    flex-direction: column;
+    gap: 5px !important;
+  }
+  
+  .mode-buttons button {
+    width: 100%;
+  }
+}

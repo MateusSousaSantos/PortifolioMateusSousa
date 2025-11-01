@@ -1,30 +1,77 @@
 import "./homepage.css";
 import Terminal from "../../components/terminal/terminal";
-import TerminalText from "../../components/terminalText/terminalText";
-import { mateus_art} from "./asc-art";
+import FaultyTerminal from "../../components/FaultyTerminal/FaultyTerminal";
+import { useEffect, useMemo } from "react";
+import { useTerminal } from "../../components/terminal/useTerminal";
 
 export const Bar = () => {
   return <p className="terminal-welcome">-----</p>;
 };
-const HomePage: React.FC = () => {
 
+// Terminal history types
+interface CommandEntry {
+  id: string;
+  command: string;
+  component: React.ReactElement | null;
+  timestamp: number;
+}
+
+interface HomePageProps {
+  onOpenVim: (fileName: string, initialContent?: string) => void;
+  terminalHistory: CommandEntry[];
+  setTerminalHistory: React.Dispatch<React.SetStateAction<CommandEntry[]>>;
+  usedCommands: string[];
+  setUsedCommands: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const HomePage: React.FC<HomePageProps> = ({
+  onOpenVim,
+  terminalHistory,
+  setTerminalHistory,
+  usedCommands,
+  setUsedCommands,
+}) => {
+  const useT = useTerminal();
+  useEffect(() => {
+    useT.executeCommand("Hello");
+  }, []);
+  const faultyTerminal = useMemo(
+    () => (
+      <FaultyTerminal
+        scale={3}
+        gridMul={[2, 1]}
+        digitSize={1.2}
+        timeScale={1}
+        pause={false}
+        scanlineIntensity={0}
+        glitchAmount={0.5}
+        flickerAmount={1}
+        noiseAmp={1}
+        chromaticAberration={0}
+        dither={0}
+        curvature={0.2}
+        tint="#ffffff"
+        mouseReact={true}
+        mouseStrength={0.5}
+        brightness={0.3}
+      />
+    ),
+    []
+  );
   return (
     <div className="body">
-      <TerminalText command="welcome" />
-      <pre id="asc-art">{mateus_art}</pre>
-      <Bar />
-      <p className="terminal-welcome">
-        Welcome to my portifolio! Here you can find lost of information about me,
-        and also some projects that I've been working on, like this one!
-        Just like a terminal you can use the commands to navigate through the site!
-      </p>
-      <Bar />
-      <p className="terminal-welcome">
-        To get started, type{" "}
-        <span style={{ color: "rgb(0, 255, 156)" }}>help</span> to see the
-        available commands
-      </p>
-      <Terminal />
+      <div className="background-container">
+        {faultyTerminal}
+      </div>
+      <div className="terminal-container">
+        <Terminal
+          onOpenVim={onOpenVim}
+          terminalHistory={terminalHistory}
+          setTerminalHistory={setTerminalHistory}
+          usedCommands={usedCommands}
+          setUsedCommands={setUsedCommands}
+        />
+      </div>
     </div>
   );
 };
