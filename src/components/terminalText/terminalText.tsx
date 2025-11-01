@@ -7,7 +7,6 @@ const TerminalText: React.FC<TerminalTextProps> = ({ command }) => {
     <pre
       style={{
         fontFamily: "monospace",
-        marginLeft: "25px",
         fontSize: "larger",
       }}
     >

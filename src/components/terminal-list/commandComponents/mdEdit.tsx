@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MarkdownEditor from '../../markdown/MarkdownEditor';
+import MarkdownCompiler from '../../markdown/MarkdownEditor';
 
 interface MdEditProps {
   fileName?: string;
@@ -27,7 +27,7 @@ const MdEdit: React.FC<MdEditProps> = ({ fileName = 'README.md' }) => {
   }
 
   return (
-    <MarkdownEditor
+    <MarkdownCompiler
       fileName={fileName}
       initialContent={content}
       onSave={handleSave}

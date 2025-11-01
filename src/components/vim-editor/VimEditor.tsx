@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import VimTerminal from './VimTerminal';
+import Squares from '../Squares/Squares';
 import './VimEditor.css';
 
 interface VimEditorProps {
@@ -22,38 +23,11 @@ const VimEditor: React.FC<VimEditorProps> = ({
   onExit,
   isFullPage = false 
 }) => {
-  const defaultContent = `# Welcome to My Portfolio
+  const defaultContent = `
+  ******************VIM EDITOR******************** 
+  # Welcome to My Portfolio
 
-## About This File
-This is a markdown file that you can edit using vim commands.
 
-## My Skills
-- React & TypeScript
-- Node.js & Express
-- Database Design
-- System Architecture
-
-## Projects
-### Project 1: Terminal Portfolio
-A unique portfolio website that simulates a terminal interface.
-
-**Technologies used:**
-\`\`\`
-- React
-- TypeScript
-- Custom CSS
-\`\`\`
-
-### Project 2: Vim Editor
-An interactive vim editor built into the terminal.
-
-> **Note**: This demonstrates both frontend skills and understanding of developer tools.
-
-## Contact
-Feel free to reach out if you'd like to collaborate!
-
----
-*This file can be edited using vim commands. Press 'i' to insert, ':' for commands.*
 `;
 
   // Function to get content from localStorage or use default
@@ -82,25 +56,49 @@ Feel free to reach out if you'd like to collaborate!
 
   const containerRef = useRef<HTMLDivElement>(null);
   const hiddenInputRef = useRef<HTMLInputElement>(null);
+  const [lastVimMotion, setLastVimMotion] = useState<string>("");
+  const vimMotionMap : Map<string, "up" | "down" | "left" | "right"> = new Map([
+    ['h', 'left'],
+    ['j', 'down'],
+    ['k', 'up'],
+    ['l', 'right']
+  ])
+
+  // Function to generate filename from content
+  const generateFileNameFromContent = useCallback((content: string): string => {
+    const lines = content.trim().split('\n');
+    
+    // Look for markdown headers first
+    for (const line of lines) {
+      const headerMatch = line.match(/^#+\s*(.+)$/);
+      if (headerMatch) {
+        const headerText = headerMatch[1].trim();
+        const cleanFileName = headerText
+          .toLowerCase()
+          .replace(/[^a-zA-Z0-9\s]/g, '') // Remove special characters
+          .replace(/\s+/g, '-') // Replace spaces with dashes
+          .substring(0, 30); // Limit length
+        
+        if (cleanFileName.length > 0) {
+          return `${cleanFileName}.md`;
+        }
+      }
+    }
+    
+    // If no header found, use first meaningful word
+    const words = content.trim().split(/\s+/);
+    for (const word of words) {
+      const cleanWord = word.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+      if (cleanWord.length > 2) { // At least 3 characters
+        return `${cleanWord}.md`;
+      }
+    }
+    
+    // Fallback
+    return 'document.md';
+  }, []);
 
   const lines = content.split('\n');
-
-  // Handle key presses for vim commands
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (isCommandMode) return; // Let VimTerminal handle command mode
-
-    switch (mode) {
-      case 'normal':
-        handleNormalModeKey(e);
-        break;
-      case 'insert':
-        handleInsertModeKey(e);
-        break;
-      case 'visual':
-        handleVisualModeKey(e);
-        break;
-    }
-  }, [mode, isCommandMode, cursor, content]);
 
   const handleNormalModeKey = useCallback((e: KeyboardEvent) => {
     e.preventDefault();
@@ -167,24 +165,28 @@ Feel free to reach out if you'd like to collaborate!
         break;
       case 'h':
         setCursor(prev => ({ ...prev, col: Math.max(0, prev.col - 1) }));
+        setLastVimMotion('h');
         break;
       case 'j':
         setCursor(prev => ({ 
           line: Math.min(lines.length - 1, prev.line + 1),
           col: Math.min(prev.col, lines[Math.min(lines.length - 1, prev.line + 1)]?.length || 0)
         }));
+        setLastVimMotion('j');
         break;
       case 'k':
         setCursor(prev => ({ 
           line: Math.max(0, prev.line - 1),
           col: Math.min(prev.col, lines[Math.max(0, prev.line - 1)]?.length || 0)
         }));
+        setLastVimMotion('k');
         break;
       case 'l':
         setCursor(prev => ({ 
           ...prev, 
           col: Math.min((lines[prev.line]?.length || 0), prev.col + 1) 
         }));
+        setLastVimMotion('l');
         break;
       case 'w':
         // Move to next word
@@ -319,6 +321,23 @@ Feel free to reach out if you'd like to collaborate!
     // Add visual mode functionality here
   }, []);
 
+  // Handle key presses for vim commands
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (isCommandMode) return; // Let VimTerminal handle command mode
+
+    switch (mode) {
+      case 'normal':
+        handleNormalModeKey(e);
+        break;
+      case 'insert':
+        handleInsertModeKey(e);
+        break;
+      case 'visual':
+        handleVisualModeKey(e);
+        break;
+    }
+  }, [mode, isCommandMode, handleNormalModeKey, handleInsertModeKey, handleVisualModeKey]);
+
   // Handle vim commands from the terminal
   const handleVimCommand = useCallback((command: string) => {
     const trimmed = command.trim();
@@ -327,15 +346,23 @@ Feel free to reach out if you'd like to collaborate!
       case 'w':
         // Save to localStorage
         try {
+          let finalFileName = fileName;
+          
+          // If saving an untitled file, generate filename from content
+          if (fileName === 'untitled.md' || fileName.startsWith('untitled')) {
+            finalFileName = generateFileNameFromContent(content);
+            setStatusMessage(`Auto-generated filename: "${finalFileName}"`);
+          }
+          
           const savedFiles = JSON.parse(localStorage.getItem('terminal-files') || '{}');
-          savedFiles[fileName] = {
-            name: fileName,
+          savedFiles[finalFileName] = {
+            name: finalFileName,
             content: content,
             lastModified: new Date().toISOString()
           };
           localStorage.setItem('terminal-files', JSON.stringify(savedFiles));
           setHasUnsavedChanges(false);
-          setStatusMessage(`"${fileName}" written`);
+          setStatusMessage(`"${finalFileName}" written`);
         } catch (error) {
           setStatusMessage(`Error saving file: ${error}`);
         }
@@ -363,15 +390,23 @@ Feel free to reach out if you'd like to collaborate!
       case 'wq':
         // Save to localStorage and quit
         try {
+          let finalFileName = fileName;
+          
+          // If saving an untitled file, generate filename from content
+          if (fileName === 'untitled.md' || fileName.startsWith('untitled')) {
+            finalFileName = generateFileNameFromContent(content);
+            setStatusMessage(`Auto-generated filename: "${finalFileName}"`);
+          }
+          
           const savedFiles = JSON.parse(localStorage.getItem('terminal-files') || '{}');
-          savedFiles[fileName] = {
-            name: fileName,
+          savedFiles[finalFileName] = {
+            name: finalFileName,
             content: content,
             lastModified: new Date().toISOString()
           };
           localStorage.setItem('terminal-files', JSON.stringify(savedFiles));
           setHasUnsavedChanges(false);
-          setStatusMessage(`"${fileName}" written`);
+          setStatusMessage(`"${finalFileName}" written`);
           setTimeout(() => {
             if (isFullPage && onExit) {
               onExit();
@@ -402,12 +437,19 @@ Feel free to reach out if you'd like to collaborate!
     }
     
     setIsCommandMode(false);
-  }, [fileName, hasUnsavedChanges, content, isFullPage, onExit]);
+  }, [fileName, hasUnsavedChanges, content, isFullPage, onExit, generateFileNameFromContent]);
 
   const handleCommandCancel = useCallback(() => {
     setIsCommandMode(false);
     setStatusMessage('-- NORMAL --');
   }, []);
+
+  // Handle click to maintain focus
+  const handleClick = useCallback(() => {
+    if (containerRef.current && mode === 'normal' && !isCommandMode) {
+      containerRef.current.focus();
+    }
+  }, [mode, isCommandMode]);
 
   useEffect(() => {
     const handleKeyDownEvent = (e: KeyboardEvent) => handleKeyDown(e);
@@ -448,7 +490,19 @@ Feel free to reach out if you'd like to collaborate!
       ref={containerRef}
       className={`vim-editor ${mode}-mode${isFullPage ? ' full-page' : ''}`} 
       tabIndex={0}
+      onClick={handleClick}
     >
+      {/* Add Squares as background */}
+      <div className="vim-editor-background">
+        <Squares 
+          direction={vimMotionMap.get(lastVimMotion) || 'diagonal'}
+          speed={0.5}
+          borderColor="rgba(0, 255, 156, 0.1)"
+          squareSize={30}
+          hoverFillColor="rgba(0, 255, 156, 0.05)"
+        />
+      </div>
+
       <div className="vim-editor-header">
         <span>"{fileName}" {hasUnsavedChanges ? '[+]' : ''}</span>
       </div>

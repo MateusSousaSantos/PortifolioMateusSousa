@@ -216,3 +216,34 @@
     height: 16.8px;
   }
 }
+
+/* Squares background styles */
+.vim-editor-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.vim-editor-background .squares-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+}
+
+/* Ensure editor content stays above the background */
+.vim-editor-header,
+.vim-editor-content,
+.vim-status-bar {
+  position: relative;
+  z-index: 1;
+}
+
+/* Add slight transparency to editor background to let squares show through */
+.vim-editor {
+  background-color: rgba(26, 26, 26, 0.85); /* Semi-transparent dark background */
+}

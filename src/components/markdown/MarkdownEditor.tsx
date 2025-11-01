@@ -10,7 +10,7 @@ interface MarkdownEditorProps {
 }
 
 
-const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
+const MarkdownCompiler: React.FC<MarkdownEditorProps> = ({
   fileName,
   initialContent = "",
 }) => {
@@ -68,4 +68,4 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
   );
 };
 
-export default MarkdownEditor;
+export default MarkdownCompiler;
